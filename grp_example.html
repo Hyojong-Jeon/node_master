@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grippper</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+        html {
+            background-color: papayawhip;
+        }
+
+        body {
+            min-height: 100vh;
+            max-width: 600px;
+            /* background-color: papayawhip; */
+            margin: 0% auto;
+        }
+
+		/* Navbar 스타일 */
+		.navbar {
+			background-color: #333;
+			overflow: hidden;
+		}
+		.navbar a {
+			float: left;
+			color: #f2f2f2;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			font-size: 17px;
+		}
+		.navbar a:hover {
+			background-color: #d8d8d8;
+			color: black;
+		}
+		.active {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		/* 버튼 스타일 */
+		.button {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px 15px;
+			margin: 8px 0;
+			border: none;
+			cursor: pointer;
+			width: 45%;
+			border-radius: 5px;
+			font-size: 1.2em;
+		}
+
+		/* 텍스트 박스 스타일 */
+		input[type=text] {
+			width: 45%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			font-size: 1.2em;
+		}
+        .textTag {
+			width: 45%;
+        }
+	</style>
+</head>
+<body>
+	<!-- Navbar -->
+	<div class="navbar">
+		<a class="active" href="#">
+            <img src="./images/Heart_shape_social_media_notification_icon_in_speech_bubbles_vector_illustration.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            HOME
+        </a>
+
+		<a href="#">A</a>
+		<a href="#">B</a>
+		<a href="#">C</a>
+	</div>
+
+	<!-- 버튼 -->
+	<button class="button" type="button">클릭하세요</button>
+    <button class="button" type="button">클릭하세요</button>
+    <div></div>
+	<!-- 텍스트 박스 -->
+	<label for="name" id="textTag">이름1</label> <label for="name" id="textTag">이름2</label>
+    <div></div>
+	<input type="text" id="name" name="name" placeholder="이름을 입력하세요...">
+
+</body>
+</html>
