@@ -71,6 +71,7 @@ const readModbusData = function()
             mbsState   = MBS_STATE_GOOD_READ;
             mbsStatus  = "success";
             console.log( Number( data.data ) );
+            // 모드버스를 통해 받은 데이터
         })
         .catch(function(e)
         {
@@ -79,6 +80,16 @@ const readModbusData = function()
             console.log(e);
         });
 };
+
+function writeRegisters() {
+    // write 3 registers statrting at register 101
+    // negative values (< 0) have to add 65535 for Modbus registers
+    client.writeRegisters(0, [103])
+        .then(function(d) {
+            console.log("Write 101 0 0", d); })
+        .catch(function(e) {
+            console.log(e.message); })
+}
 
 
 //==============================================================
@@ -133,3 +144,4 @@ const runModbus = function()
 
 //==============================================================
 runModbus();
+setTimeout (writeRegisters, 1500);
