@@ -84,7 +84,7 @@ const readModbusData = function()
 function writeRegisters() {
     // write 3 registers statrting at register 101
     // negative values (< 0) have to add 65535 for Modbus registers
-    client.writeRegisters(0, [103])
+    client.writeRegisters(0, [101])
         .then(function(d) {
             console.log("Write 101 0 0", d); })
         .catch(function(e) {
