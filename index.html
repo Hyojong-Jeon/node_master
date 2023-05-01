@@ -120,16 +120,16 @@
                     <p class="card-text"><b>Gripper Control UI</b></p>
 
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                      <label class="form-check-label" for="flexSwitchCheckDefault">Motor Enable</label>
+                      <input class="form-check-input" type="checkbox" role="switch" id="motorEnable">
+                      <label class="form-check-label" for="motorEnable">Motor Enable</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" >
-                      <label class="form-check-label" for="flexSwitchCheckChecked">Gripper Initialize</label>
+                      <input class="form-check-input" type="checkbox" role="switch" id="gripperInitialize" >
+                      <label class="form-check-label" for="gripperInitialize">Gripper Initialize</label>
                     </div>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" >
-                      <label class="form-check-label" for="flexSwitchCheckChecked">Pump ON/OFF</label>
+                      <input class="form-check-input" type="checkbox" role="switch" id="pumpONOFF" >
+                      <label class="form-check-label" for="pumpONOFF">Pump ON/OFF</label>
                     </div>
                     <div>
                     <label for="customRange1" class="form-label" min="0" max="100" value="50%"><b>Gripper Position</b></label>
@@ -137,36 +137,7 @@
                     <p>현재 슬라이더 값: <span id="sliderValue"></span></p>
 
                     <script>
-                      const slider = document.getElementById("grpPosRNG");
-                      const output = document.getElementById("sliderValue");
 
-                      output.innerHTML = slider.value + '%';
-
-                      slider.oninput = function() {
-                        output.innerHTML = this.value + '%';
-                      }
-                      slider.onchange = function() {
-                        //값이 바뀌고 난 후 콜백함수
-                        const url = '/api/gripperPosCtrl';
-                        const data = new Object();
-                        data.gripperPosCtrl = this.value;
-
-                        fetch(url, {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json'
-                          },
-                          body: JSON.stringify(data)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                          // 서버 응답 처리 코드
-                          // console.log(data);
-                        })
-                        .catch(error => {
-                          // 오류 처리 코드
-                        });
-                      }
 
                     </script>
 
@@ -259,10 +230,10 @@
                 },
                 body: JSON.stringify(data)
               })
-              .then(response => response.json())
+              .then(response => response.text())
               .then(data => {
                 // 서버 응답 처리 코드
-                // console.log(data);
+                console.log(data);
               })
               .catch(error => {
                 // 오류 처리 코드
@@ -279,15 +250,48 @@
                 },
                 //body: JSON.stringify(data)
               })
-              .then(response => response.json())
+              .then(response => response.text())
               .then(data => {
                 // 서버 응답 처리 코드
-                // console.log(data);
+                console.log(data);
               })
               .catch(error => {
                 // 오류 처리 코드
               });
           });
+
+          // 슬라이더 처리 함수 //
+          const slider = document.getElementById("grpPosRNG");
+          const output = document.getElementById("sliderValue");
+
+          output.innerHTML = slider.value + '%';
+
+          slider.oninput = function() {
+            output.innerHTML = this.value + '%';
+          }
+          slider.onchange = function() {
+            //값이 바뀌고 난 후 콜백함수
+            const url = '/api/gripperPosCtrl';
+            let data = new Object();
+            data.gripperPosCtrl = this.value;
+
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+              // 서버 응답 처리 코드
+              // console.log(data);
+            })
+            .catch(error => {
+              // 오류 처리 코드
+              console.error(error);
+            });
+          }
 
         </script>
 

@@ -58,16 +58,6 @@ const readModbusData = function()
         });
 };
 
-function writeRegisters()  {
-    // write 3 registers statrting at register 101
-    // negative values (< 0) have to add 65535 for Modbus registers
-    client.writeRegisters(0, [101, 0])
-        .then(function(d) {
-            console.log("Write 101 0 0", d); })
-        .catch(function(e) {
-            console.log(e.message); })
-};
-
 //==============================================================
 const runModbus = function()
 {
@@ -148,18 +138,22 @@ app.post('/api/connectClient', (req, res) => {
     bitRate = data.bitRate;
     modbusID = data.modbusID;
     console.log("PORT = "+comPort+", BITRATE = "+bitRate+", MODBUS ID = "+modbusID);
-    res.send('Client: connect MODBUS RTU Serial Port');
     connectClient(Number(bitRate), comPort, Number(modbusID));
+
+    res.send('USB Serial Port Opened');
 });
 
 app.post('/api/disconnectClient', (req, res) => {
     disconnectClient();
+    res.send('USB Serial Port Closed');
 });
 
 app.post('/api/gripperPosCtrl', (req, res) => {
-    let data = req.body;
-    let gripperPosCtrl = Number(data.gripperPosCtrl);
-    console.log(gripperPosCtrl);
+    var data = req.body;
+    var gripperPosCtrl = Number(data.gripperPosCtrl);
+    // console.log(gripperPosCtrl);
+
+    res.send('gripperPosCtrl Received');
 });
 
 const connectClient = function(baudRateVal, comPortVal, modbusID) {
@@ -169,18 +163,28 @@ const connectClient = function(baudRateVal, comPortVal, modbusID) {
 
     // try to connect
     client.connectRTUBuffered (comPortVal, { baudRate: baudRateVal, parity: "none", dataBits: 8, stopBits: 1 })
-        .then(function()
-        {
+        .then(function() {
             console.log("[USB Connected, wait for reading]");
         })
-        .catch(function(e)
-        {
+        .catch(function(e) {
             console.log(e);
-        });
+        })
 };
 
 const disconnectClient = function() {
     client.close( function() {console.log(comPort+' 장치와의 연결이 종료되었습니다.')})
+};
+
+const writeRegisters = function(modbusID, values)  {
+    // write 3 registers statrting at register 101
+    // negative values (< 0) have to add 65535 for Modbus registers
+    client.writeRegisters(modbusID, values)
+        .then(function(d) {
+            console.log("MODBUS Write Registers", values, d);
+        })
+        .catch(function(e) {
+            console.log(e.message);
+        })
 };
 
 // runModbus();
