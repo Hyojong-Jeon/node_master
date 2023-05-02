@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator</title>
+    <script>
+      function calculate() {
+        const num1 = parseFloat(document.getElementById('num1').value);
+        const num2 = parseFloat(document.getElementById('num2').value);
+        const op = document.getElementById('operator').value;
+        let result;
+        if (op === '+') {
+          result = num1 + num2;
+        } else if (op === '-') {
+          result = num1 - num2;
+        } else if (op === '*') {
+          result = num1 * num2;
+        } else if (op === '/') {
+          result = num1 / num2;
+        }
+        document.getElementById('result').innerHTML = result;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Calculator</h1>
+    <label for="num1">Number 1:</label>
+    <input type="text" id="num1"><br>
+    <label for="num2">Number 2:</label>
+    <input type="text" id="num2"><br>
+    <label for="operator">Operator:</label>
+    <select id="operator">
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="*">*</option>
+      <option value="/">/</option>
+    </select><br>
+    <button onclick="calculate()">Calculate</button><br>
+    <label for="result">Result:</label>
+    <span id="result"></span>
+
+    <div class="container">
+      <div class="left-column">
+        <h2>Left Column</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet sapien vel nisi commodo iaculis. Quisque maximus leo vel lectus auctor commodo.</p>
+      </div>
+      <div class="right-column">
+        <h2>Right Column</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet sapien vel nisi commodo iaculis. Quisque maximus leo vel lectus auctor commodo.</p>
+      </div>
+    </div>
+  </body>
+</html>

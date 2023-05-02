@@ -18,6 +18,11 @@
                 background-color: rgb(255, 255, 255);
                 margin: 2% 2% auto;
             }
+            thead, tbody {
+              display: table;
+              width: 100%;
+              table-layout: fixed;
+            }
         </style>
 
     </head>
@@ -37,44 +42,6 @@
             <a class="nav-link disabled">Disabled</a>
           </li>
         </ul>
-
-        <article class="my-3" id="buttons">
-          <div>
-            <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-
-            <button type="button" class="btn btn-primary">Primary</button>
-            <button type="button" class="btn btn-secondary">Secondary</button>
-            <button type="button" class="btn btn-success">Success</button>
-            <button type="button" class="btn btn-danger">Danger</button>
-            <button type="button" class="btn btn-warning">Warning</button>
-            <button type="button" class="btn btn-info">Info</button>
-            <button type="button" class="btn btn-light">Light</button>
-            <button type="button" class="btn btn-dark">Dark</button>
-
-            <button type="button" class="btn btn-link">Link</button>
-            </div></div>
-
-
-            <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-
-            <button type="button" class="btn btn-outline-primary">Primary</button>
-            <button type="button" class="btn btn-outline-secondary">Secondary</button>
-            <button type="button" class="btn btn-outline-success">Success</button>
-            <button type="button" class="btn btn-outline-danger">Danger</button>
-            <button type="button" class="btn btn-outline-warning">Warning</button>
-            <button type="button" class="btn btn-outline-info">Info</button>
-            <button type="button" class="btn btn-outline-light">Light</button>
-            <button type="button" class="btn btn-outline-dark">Dark</button>
-            </div> 공백이요 </div>
-
-            <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-            <button type="button" class="btn btn-primary btn-sm">Small button</button>
-            <button type="button" class="btn btn-primary">Standard button</button>
-            <button type="button" class="btn btn-primary btn-lg">Large button</button>
-            </div> 여기도 공백이요</div>
-
-          </div>
-        </article>
 
         <article class="my-3" id="card" style="margin: 2% 2%">
           <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
@@ -103,9 +70,10 @@
                       <label for="comPort">MODBUS Address</label>
                       <input style="width: 100px; text-align: center; margin: 1% 1%;" value="1" type="text" id="modbusID">
                     </div>
-                    <button id='connectBtn' type="button" class="btn btn-outline-dark" style="width: 20%">Connect</button>
-                    <button id='disconnectBtn' type="button" class="btn btn-outline-dark" style="width: 20%">Disonnect</button>
-                    <p class="card-text" style="margin: 1% 0%; font-size: 12px;">Ex) Bit rate: 38400, USB 포트: COM6</p>
+                    <button id='connectBtn' type="button" class="btn btn-outline-dark" style="width: 23%">Connect</button>
+                    <button id='disconnectBtn' type="button" class="btn btn-outline-dark" style="width: 23%">Disonnect</button>
+                    <p class="card-text" style="margin: 1% 0%; font-size: 14px;"><b>에러 메세지 업데이트</b></p>
+                    <p class="card-text" style="margin: 1% 0%; font-size: 12px;">작성예시) Bit rate: 38400, USB 포트: COM6</p>
                   </div>
                 </div>
               </div>
@@ -117,40 +85,70 @@
                     <b>MODBUS Send Data</b>
                   </div>
                   <div class="card-body">
-                    <p class="card-text"><b>Gripper Control UI</b></p>
+                    <div>
+                      <table style="margin: 2% 2%;">
+                        <thead>
+                          <tr>
+                            <th><p class="card-text"><b>Gripper Control UI</b></p></th>
+                            <th style="text-align: Right;">DATA</th>
+                            <th style="text-align: center;">
+                              <div>
+                                <input class="form-check-input" type="checkbox" role="switch" id="dataReceive">
+                                <label class="form-check-label" for="dataReceive">Receive Data</label>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td align="left">
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="motorEnable">
+                                <label class="form-check-label" for="motorEnable">Motor Enable</label>
+                              </div>
+                            </td>
+                            <td align="Right">Position</td>
+                            <td align="center"><a id="grpPos">0 deg</a></td>
+                          </tr>
+                          <tr>
+                            <td align="left">
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="gripperInitialize" >
+                                <label class="form-check-label" for="gripperInitialize">Gripper Initialize</label>
+                              </div>
+                            </td>
+                            <td align="Right">Velocity</td>
+                            <td align="center"><a id="grpVel">0 RPM</a></td>
+                          </tr>
+                          <tr>
+                            <td align="left">
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="pumpONOFF" >
+                                <label class="form-check-label" for="pumpONOFF">Pump ON/OFF</label>
+                              </div>
+                            </td>
+                            <td align="Right">Current</td>
+                            <td align="center"><a id="grpCur">0 mA</a></td>
+                          </tr>
+                          <!-- 데이터는 서버에서 동적으로 생성됩니다. -->
+                        </tbody>
+                      </table>
+                    </div>
 
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" role="switch" id="motorEnable">
-                      <label class="form-check-label" for="motorEnable">Motor Enable</label>
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" role="switch" id="gripperInitialize" >
-                      <label class="form-check-label" for="gripperInitialize">Gripper Initialize</label>
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" role="switch" id="pumpONOFF" >
-                      <label class="form-check-label" for="pumpONOFF">Pump ON/OFF</label>
-                    </div>
                     <div>
                     <label for="customRange1" class="form-label" min="0" max="100" value="50%"><b>Gripper Position</b></label>
                     <input id ="grpPosRNG" type="range" class="form-range">
-                    <p>현재 슬라이더 값: <span id="sliderValue"></span></p>
-
-                    <script>
-
-
-                    </script>
-
+                    <p align="center">목표 그리퍼 위치: <span id="sliderValue"></span></p>
                     </div>
-
-                    <button id='initBtn' type="button" class="btn btn-outline-dark" style="width: 20%">Initialize</button>
-                    <button id='openBtn' type="button" class="btn btn-outline-dark" style="width: 20%">Open</button>
-                    <button id='closeBtn' type="button" class="btn btn-outline-dark" style="width: 20%">Close</button>
-
+                    <div>
+                    <button onclick = "gripperInitialize()" type="button" class="btn btn-outline-dark" style="width: 20%">Initialize</button>
+                    <button onclick = "gripperOpen()" type="button" class="btn btn-outline-dark" style="width: 20%">Open</button>
+                    <button onclick = "gripperClose()" type="button" class="btn btn-outline-dark" style="width: 20%">Close</button>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
                   </div>
                   <div class="card-footer text-body-secondary">
-                    2 days ago
+                    통신 메세지 나타내는 곳
                   </div>
                 </div>
               </div>
@@ -292,6 +290,123 @@
               console.error(error);
             });
           }
+
+          const gripperInitialize = function() {
+            url = '/api/gripperInitialize';
+
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              // body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
+
+          const gripperOpen = function() {
+            url = '/api/gripperOpen';
+
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              // body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
+
+          const gripperClose = function() {
+            url = '/api/gripperClose';
+
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              // body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
+
+          let intervalID;
+
+          const dataReceive = document.getElementById("dataReceive");
+          dataReceive.onchange = function() {
+            url = '/api/gripperData';
+
+            if (dataReceive.checked) {
+              data = {dataRepeat: true};
+              intervalID = setInterval(readData, 100);
+            } else {
+              data = {dataRepeat: false};
+              clearInterval(intervalID);
+            }
+
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
+          // dataTake
+          const readData = function() {
+            url = '/api/sendData';
+
+            fetch(url)
+              .then(response => response.json())
+              .then(function(data) {
+                const grpPos = document.getElementById("grpPos");
+                const grpVel = document.getElementById("grpVel");
+                const grpCur = document.getElementById("grpCur");
+
+                let buffer1 = new ArrayBuffer(2); // 2바이트 버퍼 생성
+                let int16Array1 = new Int16Array(buffer1); // 16비트 정수 배열 생성
+                let buffer2 = new ArrayBuffer(2); // 2바이트 버퍼 생성
+                let int16Array2 = new Int16Array(buffer2); // 16비트 정수 배열 생성
+                let buffer3 = new ArrayBuffer(2); // 2바이트 버퍼 생성
+                let int16Array3 = new Int16Array(buffer3); // 16비트 정수 배열 생성
+                int16Array1[0] = data.position; // 16비트 부호 있는 정수 할당
+                int16Array2[0] = data.velocity; // 16비트 부호 있는 정수 할당
+                int16Array3[0] = data.current; // 16비트 부호 있는 정수 할당
+
+                // console.log(data); // -1234
+
+                grpPos.text = int16Array1[0]+" deg";
+                grpVel.text = int16Array2[0]+" RPM";
+                grpCur.text = int16Array3[0]+" mA";
+                // data => console.log(data)
+              })
+              .catch(error => console.error(error));
+          };
 
         </script>
 
