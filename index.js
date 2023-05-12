@@ -17,6 +17,15 @@ const app     =  express();
 const client  =  new ModbusRTU();
 
 app.use(express.json()); // POST 요청에서 JSON 파일을 PARSING 하기 위해 필요
+app.use(express.static('public', {
+    // MIME 타입 설정
+    mimeTypes: {
+      'html': 'text/html',
+      'js': 'application/javascript',
+    //   기타 파일 타입에 대한 설정
+    }
+  }));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 ///////////////////////////////////////////////////////
 //============Server-Client Data Exchange============//
@@ -42,8 +51,12 @@ client.on("error", function(error) {
 
 /* 2. Open MODBUS RTU Serial Port from Client Reqeust*/
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/index.html");
-  });
+    // res.sendFile(__dirname + "/public/index.html");
+    // res.sendFile('/index.html', { root: 'public' });
+
+    const filePath = path.join(__dirname, 'public', 'index.html');
+    res.sendFile(filePath);
+});
 
 /* 3. Asyncronous Data Receiving from Client*/
 app.post('/api/connectClient', (req, res) => {
@@ -67,7 +80,7 @@ app.post('/api/disconnectClient', (req, res) => {
 app.post('/api/gripperPosCtrl', (req, res) => {
     const data = req.body;
     const gripperPosCtrl = 100*Number(data.gripperPosCtrl);
-    console.log("[Gripper] Position Control:", gripperPosCtrl, "%");
+    console.log("[Gripper] Position Control:", gripperPosCtrl/100, "%");
     writeRegisters([104, gripperPosCtrl]);
 
     res.send('gripperPosCtrl Received');
@@ -88,13 +101,26 @@ app.post('/api/gripperClose', (req, res) => {
     res.send('gripperClose Received');
 });
 
+app.post('/api/gripperWriteMBAddress', (req, res) => {
+    let modbusAddress = req.body.changeMBAddress;
+    console.log(modbusAddress);
+    writeRegisters([50, (Number)(modbusAddress)]);
+    res.send('gripperWriteMBAddress Received');
+});
+
+app.post('/api/gripperWriteElAngle', (req, res) => {
+    // let elAngle = req.body.changeElAngle;
+    writeRegisters([51]);
+    res.send('gripperElAngle Received');
+});
+
 let intervalID;
 
 app.post('/api/gripperData', (req, res) => {
     let dataRepeat = req.body.dataRepeat;
 
     if(dataRepeat) {
-        intervalID = setInterval(readRegisters, 500);
+        intervalID = setInterval(readRegisters, 100);
         console.log("[Gripper] Data Send ON");
     } else {
         clearInterval(intervalID);
