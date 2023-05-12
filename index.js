@@ -40,9 +40,9 @@ let comPort;
 let bitRate;
 let modbusID;
 let gripperData = new Object();
-gripperData.position=0;
-gripperData.velocity=0;
-gripperData.current=0;
+gripperData.position = 0;
+gripperData.velocity = 0;
+gripperData.current = 0;
 
 /* 1. Upon SerialPort error */
 client.on("error", function(error) {
